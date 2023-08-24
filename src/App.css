@@ -1,0 +1,3 @@
+.white-image {
+  filter: brightness(200%) invert(100%);
+}
