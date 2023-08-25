@@ -14,7 +14,7 @@ export default function Home() {
   }, []);
   return (
     <div className="w-[100%] h-[100%] flex justify-center">
-      <div className="w-[1500px] h-[100%] bg-db1 flex-col relative">
+      <div className="w-[1500px] h-[100%] bg-main flex-col relative">
         <div className="w-[100%] flex justify-center absolute">
           <div className="flex items-center h-[200px]">
             <h1 className="text-[4rem] tracking-wider text-transparent text-outlined-decoration">
@@ -22,7 +22,7 @@ export default function Home() {
             </h1>
           </div>
         </div>
-        <div className="border-b border-white pb-[100px] flex justify-center underline">
+        <div className="border-b border-text pb-[100px] flex justify-center underline">
           <LiveGraph
             canvasWidth={1400}
             canvasHeight={500}

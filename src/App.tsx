@@ -5,7 +5,7 @@ import Home from "./pages/Home/Home";
 
 function App() {
   return (
-    <div className="h-[100vh] overflow-y-hidden bg-g1">
+    <div className="h-[100vh] overflow-y-hidden bg-background">
       <Navbar />
       <Home />
     </div>

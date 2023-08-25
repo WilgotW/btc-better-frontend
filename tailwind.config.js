@@ -10,7 +10,14 @@ export default {
       g2: "#BFBFBF",
       g3: "#7E7E7E",
       b1: "#5C82AB",
-      db1: "#2B3E5A",
+      db1: "#0f0059",
+
+      nvb: "#001F3F",
+      lg: "#F5F5F5",
+      active: "#007F7F",
+
+      background: "#F5F5F5",
+      main: "#F5F5F5",
     },
   },
   plugins: [],

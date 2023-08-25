@@ -31,7 +31,7 @@ export default function LiveGraph({
     if (!c) return;
 
     c.clearRect(0, 0, canvasWidth, canvasHeight);
-    c.fillStyle = "#2B3E5A";
+    c.fillStyle = "#F5F5F5";
     c.fillRect(0, 0, canvasRef.current!.width, canvasRef.current!.height);
 
     drawPoints();
@@ -42,7 +42,7 @@ export default function LiveGraph({
 
     for (let i = 0; i < currectGraphPoints.length; i++) {
       const spacing = 11;
-      c!.strokeStyle = "white";
+      c!.strokeStyle = "#001F3F";
       const point = currectGraphPoints[i];
       const xPos = i * spacing;
       // c.beginPath();
