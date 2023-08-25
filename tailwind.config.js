@@ -10,7 +10,8 @@ export default {
       g2: "#BFBFBF",
       g3: "#7E7E7E",
       b1: "#5C82AB",
-    }
+      db1: "#2B3E5A",
+    },
   },
   plugins: [],
 };

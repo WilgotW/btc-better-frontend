@@ -1,3 +1,8 @@
 .white-image {
   filter: brightness(200%) invert(100%);
 }
+.text-outlined-decoration {
+  color: #2b3e5a;
+  text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff,
+    1px 1px 0 #ffffff;
+}
