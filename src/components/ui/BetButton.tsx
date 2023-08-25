@@ -33,12 +33,10 @@ export default function BetButton({
           alt=""
         />
       </div>
-      <div
-        className={`h-[100] flex items-center w-[100px] text-${
-          selectedAmount === amount ? "black" : "g1"
-        }`}
-      >
-        <span>BET {amount}$</span>
+      <div className={`h-[100] flex items-center w-[100px]`}>
+        <span className={`text-${selectedAmount === amount ? "g1" : "white"}`}>
+          BET {amount}$
+        </span>
       </div>
     </div>
   );
