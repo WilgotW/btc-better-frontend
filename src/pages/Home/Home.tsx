@@ -1,33 +1,61 @@
-import React, { useEffect, useState } from "react";
-import LiveGraph from "./LiveGraph";
-import GraphPoint from "./GraphPoint";
-import randomInt from "../../utils/randomInt";
-export default function Home() {
-  const [points, setPoints] = useState<GraphPoint[]>([]);
+import { useState } from "react";
+import BetButton from "../../components/ui/BetButton";
+import GraphComponent from "./GraphComponent";
+import BetDurationButton from "../../components/ui/BetDurationButton";
+import PlaceBetButton from "../../components/ui/PlaceBetButton";
+import DurationInput from "../../components/ui/DurationInput";
 
-  useEffect(() => {
-    let tempPoints = [];
-    for (let i = 0; i < 120; i++) {
-      tempPoints.push(new GraphPoint(randomInt(0, 500)));
-    }
-    setPoints(tempPoints);
-  }, []);
+export default function Home() {
+  const [selectedAmount, setSelectedAmount] = useState<number>(0);
+  const [duration, setDuration] = useState<string>("1h");
+
   return (
     <div className="w-[100%] h-[100%] flex justify-center">
       <div className="w-[1500px] h-[100%] bg-main flex-col relative">
-        <div className="w-[100%] flex justify-center absolute">
-          <div className="flex items-center h-[200px]">
-            <h1 className="text-[4rem] tracking-wider text-transparent text-outlined-decoration">
-              $61 632,82
-            </h1>
+        <GraphComponent />
+        <div className="flex w-[100%]">
+          <div className="h-[fit-content] flex flex-col gap-5 p-[50px]">
+            <BetButton
+              amount={100}
+              setSelectedAmount={setSelectedAmount}
+              selectedAmount={selectedAmount}
+            />
+            <BetButton
+              amount={1000}
+              setSelectedAmount={setSelectedAmount}
+              selectedAmount={selectedAmount}
+            />
+            <BetButton
+              amount={10000}
+              setSelectedAmount={setSelectedAmount}
+              selectedAmount={selectedAmount}
+            />
           </div>
-        </div>
-        <div className="border-b border-text pb-[100px] flex justify-center underline">
-          <LiveGraph
-            canvasWidth={1400}
-            canvasHeight={500}
-            currectGraphPoints={points}
-          />
+          <div className="h-[100%] flex flex-col p-[50px] gap-5">
+            <div className="flex justify-left w-[100%] gap-[30px] tracking-wider h-[fit-content]">
+              <div className="w-[200px] h-[70px] p-4 rounded-[10px] bg-g1 flex items-center">
+                <div className="text-[30px] text-g3 flex justify-between w-[100%]">
+                  <div>
+                    <u>BET:</u>
+                  </div>
+                  <div>{selectedAmount}$</div>
+                </div>
+              </div>
+              <div className="w-[300px] h-[70px] p-4 rounded-[10px] bg-g1 flex items-center">
+                <h1 className="text-[30px] text-g3">
+                  <u>BALANCE:</u> 10.000$
+                </h1>
+              </div>
+            </div>
+            <div className="flex w-[100%] h-[70px] gap-[40px]">
+              <BetDurationButton time={parseInt(duration)} />
+              <DurationInput
+                inputValue={duration}
+                setInputValue={setDuration}
+              />
+            </div>
+            <PlaceBetButton />
+          </div>
         </div>
       </div>
     </div>

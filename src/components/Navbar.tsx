@@ -9,9 +9,9 @@ export default function Navbar() {
           <h2 className="text-white tracking-wider">GOLD BET</h2>
         </div>
       </div>
-      <div className="w-[200px] h-[50px] absolute right-0 flex justify-around items-center text-active mr-[30px]">
-        <div>SIGN IN</div>
-        <div>ABOUT</div>
+      <div className="w-[200px] h-[50px] absolute right-0 flex justify-around items-center text-white mr-[30px]">
+        <div className="cursor-pointer">SIGN IN</div>
+        <div className="cursor-pointer">ABOUT</div>
       </div>
     </div>
   );
