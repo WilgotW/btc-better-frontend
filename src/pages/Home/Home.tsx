@@ -1,9 +1,9 @@
 import { useState } from "react";
-import BetButton from "../../components/ui/BetButton";
-import GraphComponent from "./GraphComponent";
-import BetDurationButton from "../../components/ui/BetDurationButton";
-import PlaceBetButton from "../../components/ui/PlaceBetButton";
-import DurationInput from "../../components/ui/DurationInput";
+import BetButton from "./ui/BetButton";
+import GraphComponent from "./components/GraphComponent";
+import BetDurationButton from "./ui/BetDurationButton";
+import PlaceBetButton from "./ui/PlaceBetButton";
+import DurationInput from "./ui/DurationInput";
 
 export default function Home() {
   const [selectedAmount, setSelectedAmount] = useState<number>(0);

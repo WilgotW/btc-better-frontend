@@ -41,11 +41,12 @@ export default function DurationInput({ inputValue, setInputValue }: IProps) {
 
   function removeHour() {
     const currentHours = parseInt(inputValue) - 1;
+    if (currentHours < 1) return;
     setInputValue(currentHours.toString() + "h");
   }
 
   return (
-    <div className="w-[300px] flex gap-[10px] h-[70px]">
+    <div className="select-none w-[300px] flex gap-[10px] h-[70px]">
       <div className="flex flex-col gap-[10px] w-[70px] h-[70px]">
         <div
           onClick={() => addHour()}

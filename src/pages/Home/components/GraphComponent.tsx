@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LiveGraph from "./LiveGraph";
-import GraphPoint from "./GraphPoint";
-import randomInt from "../../utils/randomInt";
+import GraphPoint from "../GraphPoint";
+import randomInt from "../../../utils/randomInt";
 
 export default function GraphComponent() {
   const [points, setPoints] = useState<GraphPoint[]>([]);

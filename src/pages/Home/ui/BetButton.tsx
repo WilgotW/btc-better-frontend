@@ -1,4 +1,4 @@
-import goldStack from "../../assets/gold-stack.png";
+import goldStack from "../../../assets/gold-stack.png";
 
 interface IProps {
   amount: number;
@@ -24,7 +24,7 @@ export default function BetButton({
       onClick={(ev) => handleButton(ev)}
       className={`flex bg-[${
         selectedAmount === amount ? "#F5F5F5" : "#001F3F"
-      }] w-[200px] h-[100%] border rounded-[10px] justify-around cursor-pointer`}
+      }] w-[200px] h-[100%] border rounded-[10px] justify-around cursor-pointer select-none`}
     >
       <div className="w-[70px] h-[70px]">
         <img

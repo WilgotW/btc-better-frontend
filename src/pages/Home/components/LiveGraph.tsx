@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import GraphPoint from "./GraphPoint";
+import GraphPoint from "../GraphPoint";
 
 interface IProps {
   canvasWidth: number;
