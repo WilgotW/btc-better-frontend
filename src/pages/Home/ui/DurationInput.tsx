@@ -50,19 +50,19 @@ export default function DurationInput({ inputValue, setInputValue }: IProps) {
       <div className="flex flex-col gap-[10px] w-[70px] h-[70px]">
         <div
           onClick={() => addHour()}
-          className="bg-g1 h-[30px] w-[100%] flex justify-center items-center text-[23px] font-bold cursor-pointer"
+          className="bg-g1 rounded-[5px] h-[30px] w-[100%] flex justify-center items-center text-[23px] font-bold cursor-pointer"
         >
           +
         </div>
         <div
           onClick={() => removeHour()}
-          className="bg-g1 h-[30px] w-[100%] flex justify-center items-center text-[23px] font-bold cursor-pointer"
+          className="bg-g1 h-[30px] w-[100%] rounded-[5px] flex justify-center items-center text-[23px] font-bold cursor-pointer"
         >
           -
         </div>
       </div>
       <input
-        className="w-[220px] h-[100%] bg-g1 text-[25px] flex text-center text-g3"
+        className="w-[220px] h-[100%] bg-g1 text-[25px] rounded-[5px] flex text-center text-g3"
         value={inputValue}
         onChange={(ev) => changeValue(ev)}
         type="text"

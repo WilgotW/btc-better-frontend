@@ -35,19 +35,15 @@ export default function Home() {
             <div className="flex justify-left w-[100%] gap-[30px] tracking-wider h-[fit-content]">
               <div className="w-[200px] h-[70px] p-4 rounded-[10px] bg-g1 flex items-center">
                 <div className="text-[30px] text-g3 flex justify-between w-[100%]">
-                  <div>
-                    <u>BET:</u>
-                  </div>
+                  <div>BET:</div>
                   <div>{selectedAmount}$</div>
                 </div>
               </div>
               <div className="w-[300px] h-[70px] p-4 rounded-[10px] bg-g1 flex items-center">
-                <h1 className="text-[30px] text-g3">
-                  <u>BALANCE:</u> 10.000$
-                </h1>
+                <h1 className="text-[30px] text-g3">BALANCE: 10.000$</h1>
               </div>
             </div>
-            <div className="flex w-[100%] h-[70px] gap-[40px]">
+            <div className="flex w-[100%] h-[70px] gap-[30px]">
               <BetDurationButton time={parseInt(duration)} />
               <DurationInput
                 inputValue={duration}
