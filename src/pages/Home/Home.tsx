@@ -4,6 +4,7 @@ import GraphComponent from "./components/GraphComponent";
 import BetDurationButton from "./ui/BetDurationButton";
 import PlaceBetButton from "./ui/PlaceBetButton";
 import DurationInput from "./ui/DurationInput";
+import BetsBoard from "./components/BetsBoard";
 
 export default function Home() {
   const [selectedAmount, setSelectedAmount] = useState<number>(0);
@@ -52,6 +53,8 @@ export default function Home() {
             </div>
             <PlaceBetButton />
           </div>
+
+          <BetsBoard />
         </div>
       </div>
     </div>
