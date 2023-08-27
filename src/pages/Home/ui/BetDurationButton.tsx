@@ -11,7 +11,7 @@ export default function BetDurationButton({ time = 2 }: IProps) {
       <div className="w-[40px] flex justify-around">
         <img src={clock} alt="clock-icon" />
       </div>
-      <h1 className="text-[20px]">from now: {time}h</h1>
+      <h1 className="text-[20px]">from now: {time ? time : 0}h</h1>
     </div>
   );
 }

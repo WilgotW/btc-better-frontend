@@ -8,11 +8,15 @@ interface IProps {
 export default function DurationInput({ inputValue, setInputValue }: IProps) {
   function changeValue(ev: React.ChangeEvent<HTMLInputElement>) {
     const input = ev.target.value;
-    if (hasLetters(input)) {
-      const withoutLetters = removeLetters(input);
-      setInputValue(withoutLetters);
+
+    const numericInput = removeLetters(input);
+    const parsedInput = parseInt(numericInput);
+
+    if (!isNaN(parsedInput)) {
+      const limited = Math.min(parsedInput, 96);
+      setInputValue(limited.toString());
     } else {
-      setInputValue(input);
+      setInputValue("");
     }
   }
 
@@ -30,6 +34,7 @@ export default function DurationInput({ inputValue, setInputValue }: IProps) {
   }
 
   const hasLetters = (str: string) => /[a-zA-Z]/.test(str);
+
   const removeLetters = (str: string) => {
     return str.replace(/[a-zA-Z]/g, "");
   };
