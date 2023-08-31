@@ -1,4 +1,3 @@
-import React from "react";
 import InputBar from "../../components/ui/InputBar";
 
 export default function Login() {

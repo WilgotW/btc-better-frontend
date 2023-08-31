@@ -1,4 +1,3 @@
-import React from "react";
 import Bet from "./Bet";
 
 export default function BetsBoard() {
