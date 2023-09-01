@@ -20,6 +20,9 @@ export default {
       main: "#F5F5F5",
 
       text: "#333333",
+
+      green1: "#c54c4c",
+      red1: "#6cc54c",
     },
   },
   plugins: [],

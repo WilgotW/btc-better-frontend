@@ -38,9 +38,10 @@ export default function GraphComponent({ currentPrice }: IProps) {
       <div className="w-[100%] flex justify-center absolute">
         <div className="flex items-center h-[200px]">
           <h1
-            className={`text-[4rem] tracking-wider text-outlined-decoration text-[${
-              increased ? "#c54c4c" : "#6cc54c"
-            }]`}
+            style={{
+              color: increased ? "#c54c4c" : "#6cc54c",
+            }}
+            className="text-[4rem] tracking-wider text-outlined-decoration"
           >
             ${currentPrice}
           </h1>
