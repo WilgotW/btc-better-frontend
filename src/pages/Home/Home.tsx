@@ -5,16 +5,7 @@ import BetDurationButton from "./ui/BetDurationButton";
 import PlaceBetButton from "./ui/PlaceBetButton";
 import DurationInput from "./ui/DurationInput";
 import BetsBoard from "./components/BetsBoard";
-
-let header = new Headers();
-header.append("x-access-token", "goldapi-gkw8vrlm14zhrd-io");
-header.append("Content-Type", "application/json");
-
-let requestOptions = {
-  method: "GET",
-  headers: header,
-  redirect: "follow",
-};
+import fetchGoldPrice from "../../utils/fetchGoldPrice";
 
 export default function Home() {
   const [selectedAmount, setSelectedAmount] = useState<number>(0);
@@ -23,14 +14,8 @@ export default function Home() {
   const [currentPrice, setCurrentPrice] = useState<number>(0);
 
   async function getPrice() {
-    try {
-      fetch("https://www.goldapi.io/api/XAU/USD", requestOptions)
-        .then((response) => response.json())
-        .then((result) => setCurrentPrice(result.price_gram_24k))
-        .catch((error) => console.log("error", error));
-    } catch (err) {
-      console.error(err);
-    }
+    const goldPrice = await fetchGoldPrice();
+    setCurrentPrice(goldPrice);
   }
 
   return (
