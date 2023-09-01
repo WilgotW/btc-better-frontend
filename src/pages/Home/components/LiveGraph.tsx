@@ -45,10 +45,6 @@ export default function LiveGraph({
       c!.strokeStyle = "#001F3F";
       const point = currectGraphPoints[i];
       const xPos = i * spacing;
-      // c.beginPath();
-      // c.arc(xPos, canvasHeight - point.pointValue, 1, 0, 2 * Math.PI);
-      // c.closePath();
-      // c.stroke();
 
       c.beginPath();
       c.lineWidth = 3;

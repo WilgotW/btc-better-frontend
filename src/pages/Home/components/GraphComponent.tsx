@@ -3,9 +3,17 @@ import LiveGraph from "./LiveGraph";
 import GraphPoint from "../GraphPoint";
 import randomInt from "../../../utils/randomInt";
 
-export default function GraphComponent() {
+interface IProps {
+  currentPrice: number;
+}
+
+export default function GraphComponent({ currentPrice }: IProps) {
   const [points, setPoints] = useState<GraphPoint[]>([]);
   const [increased, setIncreased] = useState<boolean>(false);
+
+  useEffect(() => {
+    setPoints([...points, new GraphPoint(currentPrice)]);
+  }, [currentPrice]);
 
   useEffect(() => {
     let tempPoints = [];
@@ -29,19 +37,13 @@ export default function GraphComponent() {
     <>
       <div className="w-[100%] flex justify-center absolute">
         <div className="flex items-center h-[200px]">
-          {increased ? (
-            <h1
-              className={`text-[4rem] tracking-wider text-outlined-decoration text-[#c54c4c]`}
-            >
-              $61 632,82
-            </h1>
-          ) : (
-            <h1
-              className={`text-[4rem] tracking-wider text-outlined-decoration text-[#6cc54c]`}
-            >
-              $61 632,82
-            </h1>
-          )}
+          <h1
+            className={`text-[4rem] tracking-wider text-outlined-decoration text-[${
+              increased ? "#c54c4c" : "#6cc54c"
+            }]`}
+          >
+            ${currentPrice}
+          </h1>
         </div>
       </div>
       <div className="border-b border-text pb-[100px] flex justify-center underline">
