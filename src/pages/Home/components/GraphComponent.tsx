@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import LiveGraph from "./LiveGraph";
 import GraphPoint from "../GraphPoint";
 import randomInt from "../../../utils/randomInt";
+import { TradeDataProps } from "../../../interfaces";
 
 interface IProps {
   currentPrice: number;
+  tradeData: TradeDataProps[];
 }
 
-export default function GraphComponent({ currentPrice }: IProps) {
+export default function GraphComponent({ currentPrice, tradeData }: IProps) {
   const [points, setPoints] = useState<GraphPoint[]>([]);
   const [increased, setIncreased] = useState<boolean>(false);
 
@@ -17,19 +19,32 @@ export default function GraphComponent({ currentPrice }: IProps) {
 
   useEffect(() => {
     let tempPoints = [];
-    for (let i = 0; i < 100; i++) {
-      tempPoints.push(new GraphPoint(randomInt(0, 500)));
+    for (let i = 0; i < 10; i++) {
+      tempPoints.push(new GraphPoint(0));
     }
     setPoints(tempPoints);
   }, []);
 
   useEffect(() => {
+    if (tradeData) {
+      addDataPoint(tradeData[tradeData.length - 1].price / 1000);
+    }
+  }, [tradeData]);
+
+  function addDataPoint(val: number) {
+    const newPoint = new GraphPoint(val);
+    setPoints((prev) => [...prev, newPoint]);
+  }
+
+  useEffect(() => {
     if (!points || points.length <= 2) return;
     if (
-      points[points.length - 1].pointValue <
+      points[points.length - 1].pointValue <=
       points[points.length - 2].pointValue
     ) {
       setIncreased(true);
+    } else {
+      setIncreased(false);
     }
   }, [points]);
 
@@ -43,7 +58,7 @@ export default function GraphComponent({ currentPrice }: IProps) {
             }}
             className="text-[4rem] tracking-wider text-outlined-decoration"
           >
-            ${currentPrice}
+            {tradeData && <>${tradeData[tradeData.length - 1].price}</>}
           </h1>
         </div>
       </div>

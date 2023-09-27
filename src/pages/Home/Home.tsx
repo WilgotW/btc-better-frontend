@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BetButton from "./ui/BetButton";
 import GraphComponent from "./components/GraphComponent";
 import BetDurationButton from "./ui/BetDurationButton";
@@ -6,22 +6,33 @@ import PlaceBetButton from "./ui/PlaceBetButton";
 import DurationInput from "./ui/DurationInput";
 import BetsBoard from "./components/BetsBoard";
 import fetchGoldPrice from "../../utils/fetchGoldPrice";
+import finnhubApi from "../../api/FinnhubApi";
+
+interface TradeDataProps {
+  name: string;
+  value: number;
+  volume: number;
+}
 
 export default function Home() {
+  const [tradeData, setTradeData] = useState<TradeDataProps[] | undefined>(
+    undefined
+  );
+
   const [selectedAmount, setSelectedAmount] = useState<number>(0);
   const [duration, setDuration] = useState<string>("1h");
 
-  const [currentPrice, setCurrentPrice] = useState<number>(0);
-
-  async function getPrice() {
-    const goldPrice = await fetchGoldPrice();
-    setCurrentPrice(goldPrice);
-  }
+  useEffect(() => {
+    async function socket() {
+      await finnhubApi(setTradeData, tradeData);
+    }
+    socket();
+  }, []);
 
   return (
     <div className="w-[100%] h-[100%] flex justify-center">
       <div className="w-[1500px] h-[100%] bg-main flex-col relative mt-5">
-        <GraphComponent currentPrice={currentPrice} />
+        <GraphComponent tradeData={tradeData} />
         <div className="flex w-[100%]">
           <div className="h-[fit-content] flex flex-col gap-5 p-[50px]">
             <BetButton
@@ -62,7 +73,6 @@ export default function Home() {
             <PlaceBetButton />
           </div>
           <BetsBoard />
-          <button onClick={getPrice}>get price</button>
         </div>
       </div>
     </div>
