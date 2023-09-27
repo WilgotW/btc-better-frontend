@@ -34,7 +34,11 @@ export default function BetButton({
         />
       </div>
       <div className={`h-[100] flex items-center w-[100px]`}>
-        <span className={`text-${selectedAmount === amount ? "g1" : "white"}`}>
+        <span
+          style={{
+            color: selectedAmount === amount ? "gray" : "white",
+          }}
+        >
           BET {amount}$
         </span>
       </div>
