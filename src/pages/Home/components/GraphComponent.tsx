@@ -6,12 +6,18 @@ import { TradeDataProps } from "../../../interfaces";
 
 interface IProps {
   currentPrice: number;
-  tradeData: TradeDataProps[];
+  tradeData: TradeDataProps[] | undefined;
 }
 
 export default function GraphComponent({ currentPrice, tradeData }: IProps) {
   const [points, setPoints] = useState<GraphPoint[]>([]);
   const [increased, setIncreased] = useState<boolean>(false);
+
+  const [prevPointsAmount, setPrevPointsAmount] = useState<number>(0);
+
+  const spacing = 3;
+  const canvasWidth = 1400;
+  const canvasHeight = 500;
 
   useEffect(() => {
     setPoints([...points, new GraphPoint(currentPrice)]);
@@ -19,21 +25,36 @@ export default function GraphComponent({ currentPrice, tradeData }: IProps) {
 
   useEffect(() => {
     let tempPoints = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 1; i++) {
       tempPoints.push(new GraphPoint(0));
     }
     setPoints(tempPoints);
   }, []);
 
   useEffect(() => {
-    if (tradeData) {
-      addDataPoint(tradeData[tradeData.length - 1].price / 1000);
+    if (tradeData && tradeData[tradeData.length - 1].price) {
+      addDataPoint(tradeData[tradeData.length - 1].price);
     }
   }, [tradeData]);
 
   function addDataPoint(val: number) {
-    const newPoint = new GraphPoint(val);
-    setPoints((prev) => [...prev, newPoint]);
+    if (points.length > canvasWidth / (points.length * spacing)) {
+      const newArr = [...points];
+      newArr.shift();
+      setPoints(newArr);
+
+      const updated: GraphPoint[] = points.map(
+        (point) => point.pointValue - spacing
+      );
+      setPoints(updated);
+
+      setPrevPointsAmount((prev) => prev - 1);
+    }
+
+    if (tradeData!.length > points.length && val) {
+      const newPoint = new GraphPoint(val);
+      setPoints((prev) => [...prev, newPoint]);
+    }
   }
 
   useEffect(() => {
@@ -64,9 +85,12 @@ export default function GraphComponent({ currentPrice, tradeData }: IProps) {
       </div>
       <div className="border-b border-text pb-[100px] flex justify-center underline">
         <LiveGraph
-          canvasWidth={1400}
-          canvasHeight={500}
-          currectGraphPoints={points}
+          canvasWidth={canvasWidth}
+          canvasHeight={canvasHeight}
+          points={points}
+          spacing={spacing}
+          prevPointsAmount={prevPointsAmount}
+          setPrevPointsAmount={setPrevPointsAmount}
         />
       </div>
     </>

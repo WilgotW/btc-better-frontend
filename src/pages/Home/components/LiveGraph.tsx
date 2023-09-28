@@ -4,13 +4,19 @@ import GraphPoint from "../GraphPoint";
 interface IProps {
   canvasWidth: number;
   canvasHeight: number;
-  currectGraphPoints: GraphPoint[];
+  points: GraphPoint[];
+  spacing: number;
+  prevPointsAmount: number;
+  setPrevPointsAmount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function LiveGraph({
-  currectGraphPoints,
+  points,
   canvasWidth = 500,
   canvasHeight = 300,
+  spacing,
+  prevPointsAmount,
+  setPrevPointsAmount,
 }: IProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [c, setC] = useState<CanvasRenderingContext2D | null>();
@@ -21,43 +27,115 @@ export default function LiveGraph({
 
     const context = canvas.getContext("2d");
     if (context) setC(context);
+
+    draw();
   }, []);
 
   useEffect(() => {
-    draw();
-  }, [currectGraphPoints]);
+    // if (points.length > prevPointsAmount) {
+    //   //add new point
+    // }
+    drawNewPoint();
+  }, [points]);
+
+  function drawNewPoint() {
+    if (!c) return;
+
+    const scalePrice = 5;
+    c!.strokeStyle = "#001F3F";
+    c.lineWidth = 3;
+
+    c.beginPath();
+    c.lineWidth = 3;
+    //check if first point
+    if (points.length === 1) {
+      //first point
+      c.arc(0, canvasHeight - points[0].pointValue, 2, 0, Math.PI * 2);
+      c.fill();
+      c.stroke();
+    } else if (points.length > 1) {
+      //check if graph is outside boundary
+      console.log(points.length * spacing);
+
+      if (points.length * spacing >= 200) {
+        console.log("move");
+        c.clearRect(0, 0, canvasWidth, canvasHeight);
+        c.fillStyle = "#F5F5F5";
+        c.fillRect(0, 0, canvasRef.current!.width, canvasRef.current!.height);
+
+        drawPoints(spacing);
+        return;
+      }
+
+      const prevPoint = points[points.length - 2];
+      const newPoint = points[points.length - 1];
+
+      const startX = spacing * (points.length - 2);
+      const newX = spacing * (points.length - 1);
+
+      const startY =
+        canvasHeight - getLastNumbers(prevPoint.pointValue, 10) * scalePrice;
+      const newY =
+        canvasHeight - getLastNumbers(newPoint.pointValue, 10) * scalePrice;
+
+      c.moveTo(startX, startY);
+      c.lineTo(newX, newY);
+
+      c.closePath();
+      c.stroke();
+    }
+  }
+
+  function getLastNumbers(number: number, amount: number) {
+    const newNum = number % amount;
+    return newNum;
+  }
+  // function removeNumbers(number: number, amount: number) {
+  //   const stringNum = (number * 100).toString();
+  //   if (stringNum.length > amount) {
+  //     console.log(stringNum);
+  //     const removed = stringNum.substring(amount);
+  //     const newNumber = parseInt(removed);
+  //     return newNumber;
+  //   }
+  //   return 0;
+  // }
 
   function draw() {
     if (!c) return;
 
     c.clearRect(0, 0, canvasWidth, canvasHeight);
+    c.fillRect(0, 0, canvasWidth, canvasHeight);
     c.fillStyle = "#F5F5F5";
     c.fillRect(0, 0, canvasRef.current!.width, canvasRef.current!.height);
 
-    drawPoints();
+    // drawPoints();
   }
 
-  function drawPoints() {
-    if (!currectGraphPoints || !c) return;
+  function drawPoints(shiftAmount: number) {
+    if (!points || !c || points.length < 3) return;
 
     // const startIndex = Math.max(0, currentGraphPoints.length - 300);
 
-    console.log(currectGraphPoints.length);
-    for (let i = 0; i < currectGraphPoints.length; i++) {
+    // const updated = points.map((point) => (point.pointValue - shiftAmount));
+
+    for (let i = 0; i < points.length; i++) {
       const spacing = 5;
       const scalePrice = 0.01;
 
       c!.strokeStyle = "#001F3F";
-      const point = currectGraphPoints[i];
-      const prevPoint = currectGraphPoints[i - 1];
+      const point = points[i];
+      const prevPoint = points[i - 1];
 
       const xPos = i * spacing;
 
       c.beginPath();
       c.lineWidth = 3;
       if (prevPoint) {
-        const pointVal: number = removeNumbers(point.pointValue, 4);
-        const prevPointVal: number = removeNumbers(prevPoint.pointValue, 4);
+        const pointVal: number =
+          getLastNumbers(point.pointValue, 10) * scalePrice;
+        const prevPointVal: number =
+          getLastNumbers(prevPoint.pointValue, 10) * scalePrice;
         c.moveTo(xPos, canvasHeight - pointVal * scalePrice);
         const nextXpos = (i - 1) * spacing;
         c.lineTo(nextXpos, canvasHeight - prevPointVal * scalePrice);
@@ -66,16 +144,6 @@ export default function LiveGraph({
 
       c.stroke();
     }
-  }
-
-  function removeNumbers(number: number, amount: number) {
-    const stringNum = number.toString();
-    if (stringNum.length > 3) {
-      const removed = stringNum.substring(amount);
-      const newNumber = parseInt(removed);
-      return newNumber;
-    }
-    return 0;
   }
 
   return (

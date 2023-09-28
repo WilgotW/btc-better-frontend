@@ -18,15 +18,19 @@ export default function finnhubApi(
   });
 
   socket.addEventListener("message", (event) => {
-    const data = JSON.parse(event.data);
-    if (data.data[0]) {
-      const trade = data.data[0];
-      const newTrade: TradeDataProps = {
-        name: trade.s,
-        price: trade.p,
-        volume: trade.v,
-      };
-      setTradeData((prev) => [...(prev ?? []), newTrade]);
+    try {
+      const data = JSON.parse(event.data);
+      if (data.data[0]) {
+        const trade = data.data[0];
+        const newTrade: TradeDataProps = {
+          name: trade.s,
+          price: trade.p,
+          volume: trade.v,
+        };
+        setTradeData((prev) => [...(prev ?? []), newTrade]);
+      }
+    } catch (err) {
+      console.error(err);
     }
   });
 
