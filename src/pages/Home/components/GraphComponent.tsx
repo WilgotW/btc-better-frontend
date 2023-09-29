@@ -38,18 +38,18 @@ export default function GraphComponent({ currentPrice, tradeData }: IProps) {
   }, [tradeData]);
 
   function addDataPoint(val: number) {
-    if (points.length > canvasWidth / (points.length * spacing)) {
-      const newArr = [...points];
-      newArr.shift();
-      setPoints(newArr);
+    // if (points.length > canvasWidth / (points.length * spacing)) {
+    //   const newArr = [...points];
+    //   newArr.shift();
+    //   setPoints(newArr);
 
-      const updated: GraphPoint[] = points.map(
-        (point) => point.pointValue - spacing
-      );
-      setPoints(updated);
+    //   const updated: GraphPoint[] = points.map(
+    //     (point) => point.pointValue - spacing
+    //   );
+    //   setPoints(updated);
 
-      setPrevPointsAmount((prev) => prev - 1);
-    }
+    //   setPrevPointsAmount((prev) => prev - 1);
+    // }
 
     if (tradeData!.length > points.length && val) {
       const newPoint = new GraphPoint(val);

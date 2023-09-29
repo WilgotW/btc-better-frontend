@@ -57,7 +57,7 @@ export default function LiveGraph({
       //check if graph is outside boundary
       console.log(points.length * spacing);
 
-      if (points.length * spacing >= 200) {
+      if (points.length * spacing >= 1000) {
         console.log("move");
         c.clearRect(0, 0, canvasWidth, canvasHeight);
         c.fillStyle = "#F5F5F5";
