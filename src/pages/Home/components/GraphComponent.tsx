@@ -19,6 +19,8 @@ export default function GraphComponent({ currentPrice, tradeData }: IProps) {
   const canvasWidth = 1400;
   const canvasHeight = 500;
 
+  const maxPoints = 75;
+
   useEffect(() => {
     setPoints([...points, new GraphPoint(currentPrice)]);
   }, [currentPrice]);
@@ -38,22 +40,14 @@ export default function GraphComponent({ currentPrice, tradeData }: IProps) {
   }, [tradeData]);
 
   function addDataPoint(val: number) {
-    // if (points.length > canvasWidth / (points.length * spacing)) {
-    //   const newArr = [...points];
-    //   newArr.shift();
-    //   setPoints(newArr);
-
-    //   const updated: GraphPoint[] = points.map(
-    //     (point) => point.pointValue - spacing
-    //   );
-    //   setPoints(updated);
-
-    //   setPrevPointsAmount((prev) => prev - 1);
-    // }
-
-    if (tradeData!.length > points.length && val) {
-      const newPoint = new GraphPoint(val);
-      setPoints((prev) => [...prev, newPoint]);
+    if (val) {
+      if (points.length >= maxPoints) {
+        const newArr = [...points.slice(1), new GraphPoint(val)];
+        setPoints(newArr);
+      } else {
+        const newPoint = new GraphPoint(val);
+        setPoints((prev) => [...prev, newPoint]);
+      }
     }
   }
 
@@ -88,6 +82,7 @@ export default function GraphComponent({ currentPrice, tradeData }: IProps) {
           canvasWidth={canvasWidth}
           canvasHeight={canvasHeight}
           points={points}
+          setPoints={setPoints}
           spacing={spacing}
           prevPointsAmount={prevPointsAmount}
           setPrevPointsAmount={setPrevPointsAmount}

@@ -5,7 +5,6 @@ import BetDurationButton from "./ui/BetDurationButton";
 import PlaceBetButton from "./ui/PlaceBetButton";
 import DurationInput from "./ui/DurationInput";
 import BetsBoard from "./components/BetsBoard";
-import fetchGoldPrice from "../../utils/fetchGoldPrice";
 import finnhubApi from "../../api/FinnhubApi";
 
 interface TradeDataProps {
