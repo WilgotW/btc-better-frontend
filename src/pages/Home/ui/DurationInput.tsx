@@ -41,6 +41,7 @@ export default function DurationInput({ inputValue, setInputValue }: IProps) {
 
   function addHour() {
     const currentHours = parseInt(inputValue) + 1;
+    if (currentHours > 96) return;
     setInputValue(currentHours.toString() + "h");
   }
 
