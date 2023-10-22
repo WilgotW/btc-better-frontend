@@ -7,7 +7,6 @@ import Login from "./pages/Login/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register/Register";
 import About from "./pages/About/About";
-import { useEffect, useState } from "react";
 
 function App() {
   return (

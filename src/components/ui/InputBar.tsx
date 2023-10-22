@@ -4,14 +4,19 @@ interface IProps {
   width: number;
   height: number;
   color: string;
+  isPassword: boolean;
 }
 
 export default function InputBar({
-  width = 100,
-  height = 25,
+  width,
+  height,
   color = "bg-white",
+  isPassword = false,
 }: IProps) {
   return (
-    <input className={`w-[${width}px] h-[${height}px] ${color}`} type="text" />
+    <input
+      type={isPassword ? "password" : "text"}
+      className={`w-[${width}px] h-[${height}px] ${color}`}
+    />
   );
 }

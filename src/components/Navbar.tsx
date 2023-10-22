@@ -13,11 +13,11 @@ export default function Navbar() {
     <div className="relative w-[100%] h-[100px] bg-nvb flex justify-left items-center">
       <div
         onClick={() => goto("/")}
-        className="flex justify-between w-[140px] h-[38px] z-10 bg-nvb ml-[30px] cursor-pointer"
+        className="flex justify-between w-[120px] h-[38px] z-10 bg-nvb ml-[30px] cursor-pointer"
       >
         <img className="white-image" src={icon} alt="icon" />
         <div className="h-[100%] flex items-center pl-[10px]">
-          <h2 className="text-white tracking-wider">GOLD BET</h2>
+          <h2 className="text-white tracking-wider">BTC BET</h2>
         </div>
       </div>
       <div className="w-[200px] h-[50px] absolute right-0 flex justify-around items-center text-white mr-[30px]">
