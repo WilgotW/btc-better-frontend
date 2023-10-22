@@ -35,7 +35,7 @@ export default function Register() {
             <span>
               Already have an account?{" "}
               <u>
-                <Link to={"/register"}>SIGN IN</Link>
+                <Link to={"/login"}>SIGN IN</Link>
               </u>
             </span>
           </div>
