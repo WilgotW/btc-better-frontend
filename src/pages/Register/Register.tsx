@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
 export default function Register() {
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  async function register(ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    ev.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:4000/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          email: email,
+          password: password,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <div className="w-[100%] h-[1000px] flex justify-center items-center rounded">
       <div className="flex flex-col">
@@ -13,17 +39,33 @@ export default function Register() {
         <div className="flex flex-col w-[500px] h-[500px] bg-white relative pt-6">
           <div className="flex flex-col w-[100%] gap-3">
             <div className="pl-6 pt-4 pr-6 flex flex-col">
-              <TextField label="name" type="text" variant="outlined" />
+              <TextField
+                label="name"
+                type="text"
+                variant="outlined"
+                onChange={(ev) => setUsername(ev.target.value)}
+              />
             </div>
             <div className="pl-6 pt-4 pr-6 flex flex-col">
-              <TextField label="email" type="text" variant="outlined" />
+              <TextField
+                label="email"
+                type="text"
+                variant="outlined"
+                onChange={(ev) => setEmail(ev.target.value)}
+              />
             </div>
             <div className="pl-6 pt-4 pr-6 flex flex-col">
-              <TextField label="password" type="password" variant="outlined" />
+              <TextField
+                label="password"
+                type="password"
+                variant="outlined"
+                onChange={(ev) => setPassword(ev.target.value)}
+              />
             </div>
           </div>
           <div className="w-[100%] h-[100px] items-center flex pl-7">
             <Button
+              onClick={(ev) => register(ev)}
               style={{ background: "#F5F5F5", color: "black", width: "130px" }}
               variant="contained"
               color="primary"
