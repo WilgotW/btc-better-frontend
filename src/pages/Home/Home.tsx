@@ -6,6 +6,7 @@ import PlaceBetButton from "./ui/PlaceBetButton";
 import DurationInput from "./ui/DurationInput";
 import BetsBoard from "./components/BetsBoard";
 import finnhubApi from "../../api/FinnhubApi";
+import fetchEndPrice from "../../api/fetchEndPrice";
 
 interface TradeDataProps {
   name: string;
@@ -26,6 +27,8 @@ export default function Home() {
       await finnhubApi(setTradeData, tradeData);
     }
     socket();
+
+    fetchEndPrice(1697346450, 1697346510);
   }, []);
 
   return (
