@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [missingInputs, setMissingInputs] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   async function register(ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     ev.preventDefault();
+
+    if (!allInputs()) {
+      setMissingInputs(true);
+      return;
+    }
+    setMissingInputs(false);
 
     try {
       const response = await fetch("http://localhost:4000/user/register", {
@@ -25,9 +34,23 @@ export default function Register() {
       });
       const data = await response.json();
       console.log(data);
+
+      navigate("/login");
     } catch (err) {
       console.error(err);
     }
+    resetInputs();
+  }
+
+  function allInputs(): boolean {
+    if (!username || !email || !password) return false;
+    return true;
+  }
+
+  function resetInputs() {
+    setUsername("");
+    setEmail("");
+    setPassword("");
   }
 
   return (
@@ -43,6 +66,7 @@ export default function Register() {
                 label="name"
                 type="text"
                 variant="outlined"
+                value={username}
                 onChange={(ev) => setUsername(ev.target.value)}
               />
             </div>
@@ -51,6 +75,7 @@ export default function Register() {
                 label="email"
                 type="text"
                 variant="outlined"
+                value={email}
                 onChange={(ev) => setEmail(ev.target.value)}
               />
             </div>
@@ -59,9 +84,15 @@ export default function Register() {
                 label="password"
                 type="password"
                 variant="outlined"
+                value={password}
                 onChange={(ev) => setPassword(ev.target.value)}
               />
             </div>
+          </div>
+          <div className="h-8 flex pl-6 pt-4">
+            {missingInputs && (
+              <span className="text-[red]">Please fill out all inputs</span>
+            )}
           </div>
           <div className="w-[100%] h-[100px] items-center flex pl-7">
             <Button
