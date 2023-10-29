@@ -3,3 +3,6 @@ export interface TradeDataProps {
   price: number;
   volume: number;
 }
+export interface User {
+  balance: number;
+}

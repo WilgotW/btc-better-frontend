@@ -3,12 +3,15 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { CircularProgress } from "@mui/material";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [missingInputs, setMissingInputs] = useState<boolean>(false);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -20,6 +23,8 @@ export default function Login() {
       return;
     }
     setMissingInputs(false);
+
+    setLoading(true);
 
     try {
       const response = await fetch("http://localhost:4000/user/login", {
@@ -36,15 +41,20 @@ export default function Login() {
       const data = await response.json();
       console.log(data);
 
+      const authKey = data.user.token;
+      localStorage.setItem("key", authKey);
+      console.log(authKey);
+
       navigate("/");
     } catch (err) {
       console.error(err);
     }
     resetInputs();
+    setLoading(false);
   }
 
   function allInputs(): boolean {
-    if (!username || !email || !password) return false;
+    if (!email || !password) return false;
     return true;
   }
 
@@ -61,32 +71,25 @@ export default function Login() {
           <h1 className="text-[20px]">Login</h1>
         </div>
         <div className="flex flex-col w-[500px] h-[500px] bg-white relative pt-6">
-          <div className="pl-6 pt-4 pr-6 flex flex-col">
-            <TextField
-              label="name"
-              type="text"
-              variant="outlined"
-              value={username}
-              onChange={(ev) => setUsername(ev.target.value)}
-            />
-          </div>
-          <div className="pl-6 pt-4 pr-6 flex flex-col">
-            <TextField
-              label="email"
-              type="text"
-              variant="outlined"
-              value={email}
-              onChange={(ev) => setEmail(ev.target.value)}
-            />
-          </div>
-          <div className="pl-6 pt-4 pr-6 flex flex-col">
-            <TextField
-              label="password"
-              type="password"
-              variant="outlined"
-              value={password}
-              onChange={(ev) => setPassword(ev.target.value)}
-            />
+          <div className="flex flex-col w-[100%] gap-3">
+            <div className="pl-6 pt-4 pr-6 flex flex-col">
+              <TextField
+                label="email"
+                type="text"
+                variant="outlined"
+                value={email}
+                onChange={(ev) => setEmail(ev.target.value)}
+              />
+            </div>
+            <div className="pl-6 pt-4 pr-6 flex flex-col pb-[80px]">
+              <TextField
+                label="password"
+                type="password"
+                variant="outlined"
+                value={password}
+                onChange={(ev) => setPassword(ev.target.value)}
+              />
+            </div>
           </div>
           <div className="h-8 flex pl-6 pt-4">
             {missingInputs && (
@@ -100,7 +103,11 @@ export default function Login() {
               variant="contained"
               color="primary"
             >
-              Login
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Login"
+              )}
             </Button>
           </div>
           <div className="w-[100%] flex p-6 absolute bottom-3">

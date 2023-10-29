@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 export default function Register() {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [missingInputs, setMissingInputs] = useState<boolean>(false);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -19,6 +22,7 @@ export default function Register() {
       return;
     }
     setMissingInputs(false);
+    setLoading(true);
 
     try {
       const response = await fetch("http://localhost:4000/user/register", {
@@ -40,6 +44,7 @@ export default function Register() {
       console.error(err);
     }
     resetInputs();
+    setLoading(false);
   }
 
   function allInputs(): boolean {
@@ -101,7 +106,11 @@ export default function Register() {
               variant="contained"
               color="primary"
             >
-              Register
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Register"
+              )}
             </Button>
           </div>
           <div className="w-[100%] flex p-6 absolute bottom-3">

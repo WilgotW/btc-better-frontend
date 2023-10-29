@@ -5,14 +5,11 @@ import BetDurationButton from "./ui/BetDurationButton";
 import PlaceBetButton from "./ui/PlaceBetButton";
 import DurationInput from "./ui/DurationInput";
 import BetsBoard from "./components/BetsBoard";
-import finnhubApi from "../../api/FinnhubApi";
-import fetchEndPrice from "../../api/fetchEndPrice";
-
-interface TradeDataProps {
-  name: string;
-  value: number;
-  volume: number;
-}
+import finnhubApi from "../../api/finnhub/FinnhubApi";
+import fetchEndPrice from "../../api/finnhub/fetchEndPrice";
+import isLoggedIn from "../../utils/isLoggedIn";
+import getUserData from "../../api/getUserData";
+import { TradeDataProps, User } from "../../interfaces";
 
 export default function Home() {
   const [tradeData, setTradeData] = useState<TradeDataProps[] | undefined>(
@@ -22,13 +19,28 @@ export default function Home() {
   const [selectedAmount, setSelectedAmount] = useState<number>(0);
   const [duration, setDuration] = useState<string>("1h");
 
+  const [userData, setUserData] = useState<User>();
+
   useEffect(() => {
     async function socket() {
       await finnhubApi(setTradeData, tradeData);
     }
     socket();
 
-    fetchEndPrice(1697346450, 1697346510);
+    async function userData() {
+      if (isLoggedIn()) {
+        const data = await getUserData();
+        console.log(data);
+        setUserData({
+          balance: data.balance,
+        });
+        // const data: User = getUserData();
+        // setUserData(data);
+      }
+    }
+    userData();
+
+    // fetchEndPrice(1697346450, 1697346510);
   }, []);
 
   return (
@@ -62,7 +74,9 @@ export default function Home() {
                 </div>
               </div>
               <div className="w-[300px] h-[70px] p-4 rounded-[10px] bg-g1 flex items-center">
-                <h1 className="text-[30px] text-g3">BALANCE: 10.000$</h1>
+                <h1 className="text-[30px] text-g3">
+                  {userData?.balance && `BALANCE: $${userData.balance}`}
+                </h1>
               </div>
             </div>
             <div className="flex w-[100%] h-[70px] gap-[30px]">
