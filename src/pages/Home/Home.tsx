@@ -11,6 +11,7 @@ import isLoggedIn from "../../utils/isLoggedIn";
 import getUserData from "../../api/getUserData";
 import { TradeDataProps, User } from "../../interfaces";
 import getUserBets from "../../api/getUserBets";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [tradeData, setTradeData] = useState<TradeDataProps[] | undefined>(
@@ -19,8 +20,9 @@ export default function Home() {
 
   const [selectedAmount, setSelectedAmount] = useState<number>(0);
   const [duration, setDuration] = useState<string>("1h");
-
   const [userData, setUserData] = useState<User>();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function socket() {
@@ -41,6 +43,9 @@ export default function Home() {
 
         // const data: User = getUserData();
         // setUserData(data);
+        console.log("hehe");
+      } else {
+        navigate("/login");
       }
     }
     userData();
