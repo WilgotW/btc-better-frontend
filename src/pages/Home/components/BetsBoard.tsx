@@ -1,5 +1,7 @@
 import Bet from "./Bet";
 
+interface IProps {}
+
 export default function BetsBoard() {
   return (
     <div className="h-[350px] p-[50px]">

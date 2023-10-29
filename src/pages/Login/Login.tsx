@@ -42,7 +42,7 @@ export default function Login() {
       console.log(data);
 
       const authKey = data.user.token;
-      localStorage.setItem("key", authKey);
+      localStorage.setItem("authorization", authKey);
       console.log(authKey);
 
       navigate("/");

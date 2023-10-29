@@ -10,6 +10,7 @@ import fetchEndPrice from "../../api/finnhub/fetchEndPrice";
 import isLoggedIn from "../../utils/isLoggedIn";
 import getUserData from "../../api/getUserData";
 import { TradeDataProps, User } from "../../interfaces";
+import getUserBets from "../../api/getUserBets";
 
 export default function Home() {
   const [tradeData, setTradeData] = useState<TradeDataProps[] | undefined>(
@@ -29,11 +30,15 @@ export default function Home() {
 
     async function userData() {
       if (isLoggedIn()) {
-        const data = await getUserData();
-        console.log(data);
+        const userData = await getUserData();
+
         setUserData({
-          balance: data.balance,
+          balance: userData.balance,
         });
+
+        const userBets = await getUserBets();
+        console.log(userBets);
+
         // const data: User = getUserData();
         // setUserData(data);
       }
