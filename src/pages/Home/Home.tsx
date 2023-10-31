@@ -7,7 +7,7 @@ import DurationInput from "./ui/DurationInput";
 import BetsBoard from "./components/BetsBoard";
 import finnhubApi from "../../api/finnhub/FinnhubApi";
 import fetchEndPrice from "../../api/finnhub/fetchEndPrice";
-import isLoggedIn from "../../utils/isLoggedIn";
+import hasToken from "../../utils/isLoggedIn";
 import getUserData from "../../api/getUserData";
 import { TradeDataProps, User } from "../../interfaces";
 import getUserBets from "../../api/getUserBets";
@@ -30,17 +30,25 @@ export default function Home() {
     }
     socket();
 
+    // localStorage.removeItem("authorization");
+
     async function userData() {
-      console.log("e");
-      if (isLoggedIn()) {
+      if (hasToken()) {
         const userData = await getUserData();
+        if (!userData) {
+          navigate("/login");
+        }
 
         setUserData({
           balance: userData.balance,
         });
 
         const userBets = await getUserBets();
-        console.log(userBets);
+        if (!userBets) {
+          console.log("no bets");
+        } else {
+          console.log(userBets);
+        }
 
         // const data: User = getUserData();
         // setUserData(data);
