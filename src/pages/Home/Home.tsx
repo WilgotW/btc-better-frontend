@@ -31,6 +31,7 @@ export default function Home() {
     socket();
 
     async function userData() {
+      console.log("e");
       if (isLoggedIn()) {
         const userData = await getUserData();
 
@@ -43,7 +44,6 @@ export default function Home() {
 
         // const data: User = getUserData();
         // setUserData(data);
-        console.log("hehe");
       } else {
         navigate("/login");
       }
