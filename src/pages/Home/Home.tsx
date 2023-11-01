@@ -6,12 +6,11 @@ import PlaceBetButton from "./ui/PlaceBetButton";
 import DurationInput from "./ui/DurationInput";
 import BetsBoard from "./components/BetsBoard";
 import finnhubApi from "../../api/finnhub/FinnhubApi";
-import fetchEndPrice from "../../api/finnhub/fetchEndPrice";
 import hasToken from "../../utils/isLoggedIn";
 import getUserData from "../../api/getUserData";
 import { TradeDataProps, User } from "../../interfaces";
-import getUserBets from "../../api/getUserBets";
 import { useNavigate } from "react-router-dom";
+import goToRoute from "../../utils/goToRoute";
 
 export default function Home() {
   const [tradeData, setTradeData] = useState<TradeDataProps[] | undefined>(
@@ -22,11 +21,14 @@ export default function Home() {
   const [duration, setDuration] = useState<string>("1h");
   const [userData, setUserData] = useState<User>();
 
+  const [noFetch, setNoFetch] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
+    setNoFetch(false);
     async function socket() {
-      await finnhubApi(setTradeData, tradeData);
+      finnhubApi(setTradeData, tradeData);
     }
     socket();
 
@@ -34,32 +36,51 @@ export default function Home() {
 
     async function userData() {
       if (hasToken()) {
-        const userData = await getUserData();
-        if (!userData) {
-          navigate("/login");
+        try {
+          const userData = await getUserData();
+
+          if (userData === undefined) {
+            setNoFetch(true);
+          }
+          if (userData) {
+            setUserData({
+              balance: userData.balance,
+            });
+          }
+        } catch (err) {
+          setNoFetch(true);
+          console.error(err);
         }
 
-        setUserData({
-          balance: userData.balance,
-        });
-
-        const userBets = await getUserBets();
-        if (!userBets) {
-          console.log("no bets");
-        } else {
-          console.log(userBets);
-        }
+        // const userBets = await getUserBets();
+        // if (!userBets) {
+        //   console.log("no bets");
+        // } else {
+        //   console.log(userBets);
+        // }
 
         // const data: User = getUserData();
         // setUserData(data);
       } else {
-        navigate("/login");
+        setNoFetch(true);
       }
     }
+    // function onComplete(userData) {
+    //   if (userData === undefined) {
+    //     navigate("/login");
+    //   }
+    // }
     userData();
 
     // fetchEndPrice(1697346450, 1697346510);
   }, []);
+
+  useEffect(() => {
+    if (noFetch === true) {
+      console.log("heheh");
+      navigate("/login");
+    }
+  }, [noFetch]);
 
   return (
     <div className="w-[100%] h-[100%] flex justify-center">

@@ -5,15 +5,16 @@ import randomInt from "../../../utils/randomInt";
 import { TradeDataProps } from "../../../interfaces";
 
 interface IProps {
-  currentPrice: number;
   tradeData: TradeDataProps[] | undefined;
 }
 
-export default function GraphComponent({ currentPrice, tradeData }: IProps) {
+export default function GraphComponent({ tradeData }: IProps) {
   const [points, setPoints] = useState<GraphPoint[]>([]);
   const [increased, setIncreased] = useState<boolean>(false);
 
   const [prevPointsAmount, setPrevPointsAmount] = useState<number>(0);
+
+  // const currentPrice: number;
 
   const spacing = 3;
   const canvasWidth = 1400;
@@ -21,9 +22,9 @@ export default function GraphComponent({ currentPrice, tradeData }: IProps) {
 
   const maxPoints = 75;
 
-  useEffect(() => {
-    setPoints([...points, new GraphPoint(currentPrice)]);
-  }, [currentPrice]);
+  // useEffect(() => {
+  //   setPoints([...points, new GraphPoint(currentPrice)]);
+  // }, [currentPrice]);
 
   useEffect(() => {
     let tempPoints = [];
