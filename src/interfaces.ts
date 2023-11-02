@@ -4,5 +4,6 @@ export interface TradeDataProps {
   volume: number;
 }
 export interface User {
+  userId: number;
   balance: number;
 }

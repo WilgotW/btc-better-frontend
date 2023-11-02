@@ -10,7 +10,7 @@ import hasToken from "../../utils/isLoggedIn";
 import getUserData from "../../api/getUserData";
 import { TradeDataProps, User } from "../../interfaces";
 import { useNavigate } from "react-router-dom";
-import goToRoute from "../../utils/goToRoute";
+import placeBet from "../../api/placeBet";
 
 export default function Home() {
   const [tradeData, setTradeData] = useState<TradeDataProps[] | undefined>(
@@ -44,8 +44,10 @@ export default function Home() {
           }
           if (userData) {
             setUserData({
+              userId: userData.id,
               balance: userData.balance,
             });
+            console.log(userData);
           }
         } catch (err) {
           setNoFetch(true);
@@ -77,11 +79,26 @@ export default function Home() {
 
   useEffect(() => {
     if (noFetch === true) {
-      console.log("heheh");
       navigate("/login");
     }
   }, [noFetch]);
 
+  async function bet(ev: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    ev.preventDefault();
+
+    if (tradeData && userData) {
+      const durationNum: number = parseInt(duration.slice(0, -1));
+
+      const bet = await placeBet(
+        userData?.userId,
+        "BTC",
+        durationNum,
+        selectedAmount,
+        tradeData[tradeData.length - 1].price
+      );
+      console.log(bet);
+    }
+  }
   return (
     <div className="w-[100%] h-[100%] flex justify-center">
       <div className="w-[1500px] h-[100%] bg-main flex-col relative mt-5">
@@ -137,7 +154,14 @@ export default function Home() {
                 setInputValue={setDuration}
               />
             </div>
-            <PlaceBetButton />
+            <div
+              onClick={(ev) => bet(ev)}
+              className="select-none w-[100%] border rounded-[10px] bg-[#001F3F] h-[70px] flex justify-center items-center cursor-pointer"
+            >
+              <h1 className="text-white text-[20px] tracking-widest ">
+                PLACE BET
+              </h1>
+            </div>
           </div>
           <BetsBoard />
         </div>

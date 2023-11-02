@@ -37,7 +37,6 @@ export default function finnhubApi(
     console.error("WebSocket error:", event);
   });
 
-  // Send the subscription message to start receiving trade updates
   socket.addEventListener("open", () => {
     socket.send(subscriptionMessage);
   });
