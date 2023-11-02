@@ -113,9 +113,21 @@ export default function Home() {
                 </div>
               </div>
               <div className="w-[300px] h-[70px] p-4 rounded-[10px] bg-g1 flex items-center">
-                <h1 className="text-[30px] text-g3">
-                  {userData?.balance && `BALANCE: $${userData.balance}`}
-                </h1>
+                {userData?.balance ? (
+                  <h1 className="text-[30px] text-g3">
+                    BALANCE: ${userData.balance}
+                  </h1>
+                ) : (
+                  <div className="flex w-[100%] items-center justify-left">
+                    {" "}
+                    <h1 className="text-[30px] text-g3">
+                      <div>BALANCE:</div>
+                    </h1>
+                    <div className="w-[40%] flex justify-center items-center">
+                      <div className="loader"></div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex w-[100%] h-[70px] gap-[30px]">

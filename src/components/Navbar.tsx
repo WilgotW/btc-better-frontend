@@ -9,6 +9,11 @@ export default function Navbar() {
   function goto(route: TypeOfRoutes) {
     navigate(route);
   }
+
+  function logout() {
+    localStorage.removeItem("authorization");
+    window.location.reload();
+  }
   return (
     <div className="relative w-[100%] h-[100px] bg-nvb flex justify-left items-center">
       <div
@@ -21,9 +26,16 @@ export default function Navbar() {
         </div>
       </div>
       <div className="w-[200px] h-[50px] absolute right-0 flex justify-around items-center text-white mr-[30px]">
-        <div onClick={() => goto("/login")} className="cursor-pointer">
-          SIGN IN
-        </div>
+        {localStorage.getItem("authorization")?.length ? (
+          <div onClick={() => logout()} className="cursor-pointer">
+            LOG OUT
+          </div>
+        ) : (
+          <div onClick={() => goto("/login")} className="cursor-pointer">
+            SIGN IN
+          </div>
+        )}
+
         <div onClick={() => goto("/about")} className="cursor-pointer">
           ABOUT
         </div>
