@@ -13,25 +13,26 @@ export default async function placeBet(
   //   console.log(amount);
 
   try {
-    const requestBody = JSON.stringify({
+    const requestBody = {
       userId: userId,
       ticker: ticker,
       duration: duration,
       amount: amount,
       startValue: startValue,
-    });
+    };
     console.log(requestBody);
 
     const response = await fetch("http://localhost:4000/bet/create", {
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
         authorization: authKey,
       },
-      body: requestBody,
+      body: JSON.stringify(requestBody),
     });
 
-    // const data = await response.json();
-    // return data;
+    const data = await response.json();
+    return data;
   } catch (err) {
     console.error(err);
   }

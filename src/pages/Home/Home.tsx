@@ -11,6 +11,8 @@ import getUserData from "../../api/getUserData";
 import { TradeDataProps, User } from "../../interfaces";
 import { useNavigate } from "react-router-dom";
 import placeBet from "../../api/placeBet";
+import checkBets from "../../api/checkBets";
+import fetchEndValue from "../../api/alphavantage/fetchEndValue";
 
 export default function Home() {
   const [tradeData, setTradeData] = useState<TradeDataProps[] | undefined>(
@@ -75,6 +77,7 @@ export default function Home() {
     userData();
 
     // fetchEndPrice(1697346450, 1697346510);
+    fetchEndValue();
   }, []);
 
   useEffect(() => {
@@ -98,6 +101,13 @@ export default function Home() {
       );
       console.log(bet);
     }
+  }
+
+  async function getBetsDone(
+    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    ev.preventDefault();
+    await checkBets();
   }
   return (
     <div className="w-[100%] h-[100%] flex justify-center">
@@ -164,6 +174,7 @@ export default function Home() {
             </div>
           </div>
           <BetsBoard />
+          <button onClick={(ev) => getBetsDone(ev)}>get bets</button>
         </div>
       </div>
     </div>
