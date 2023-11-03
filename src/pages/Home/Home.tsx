@@ -175,8 +175,8 @@ export default function Home() {
           </div>
           <div className="relative">
             <BetsBoard betData={allBets} />
-            <div className="absolute flex justify-center w-[100%] bottom-10">
-              <div className="w-[50px] h-[50px] flex justify-center items-center bg-nvb rounded-full p-1">
+            <div className="absolute flex justify-center w-[100%] bottom-7">
+              <div className="w-[50px] h-[50px] flex justify-center items-center bg-nvb rounded-full p-1 cursor-pointer">
                 <BiRefresh
                   className="w-[100%] h-[100%] "
                   style={{ fill: "white" }}
