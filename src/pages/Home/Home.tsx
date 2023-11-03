@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import placeBet from "../../api/placeBet";
 import checkBets from "../../api/checkBets";
 import fetchEndValue from "../../api/alphavantage/fetchEndValue";
+import getUserBets from "../../api/getUserBets";
+import { BiRefresh } from "react-icons/bi";
 
 export default function Home() {
   const [tradeData, setTradeData] = useState<TradeDataProps[] | undefined>(
@@ -22,6 +24,7 @@ export default function Home() {
   const [selectedAmount, setSelectedAmount] = useState<number>(0);
   const [duration, setDuration] = useState<string>("1h");
   const [userData, setUserData] = useState<User>();
+  const [allBets, setAllBets] = useState();
 
   const [noFetch, setNoFetch] = useState<boolean>(false);
 
@@ -68,15 +71,14 @@ export default function Home() {
         console.error(err);
       }
 
-      // const userBets = await getUserBets();
-      // if (!userBets) {
-      //   console.log("no bets");
-      // } else {
-      //   console.log(userBets);
-      // }
-
-      // const data: User = getUserData();
-      // setUserData(data);
+      const userBets = await getUserBets();
+      console.log(userBets);
+      if (!userBets) {
+        console.log("no bets");
+      } else {
+        console.log(userBets);
+        setAllBets(userBets);
+      }
     } else {
       setNoFetch(true);
     }
@@ -171,8 +173,18 @@ export default function Home() {
               </h1>
             </div>
           </div>
-          <BetsBoard />
-          <button onClick={(ev) => getBetsDone(ev)}>get bets</button>
+          <div className="relative">
+            <BetsBoard betData={allBets} />
+            <div className="absolute flex justify-center w-[100%] bottom-10">
+              <div className="w-[50px] h-[50px] flex justify-center items-center bg-nvb rounded-full p-1">
+                <BiRefresh
+                  className="w-[100%] h-[100%] "
+                  style={{ fill: "white" }}
+                  onClick={(ev) => getBetsDone(ev)}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

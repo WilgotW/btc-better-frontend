@@ -6,7 +6,6 @@ export default async function getUserBets() {
     console.error("no key found");
     return undefined;
   }
-  console.log("heheh");
 
   try {
     const response = await fetch("http://localhost:4000/bet/get-all", {
@@ -15,12 +14,10 @@ export default async function getUserBets() {
         authorization: authKey,
       },
     });
-    console.log(await response.json());
     if (checkStatus(response.status)) {
       const data = await response.json();
-      return data;
+      return await data;
     }
-    return undefined;
   } catch (err) {
     console.error(err);
 

@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function Bet() {
+interface IProps {
+  amount: number;
+  startDate: number;
+  duration: number;
+}
+
+export default function Bet({ amount, startDate, duration }: IProps) {
+  const [date, setDate] = useState<string>("");
+  useEffect(() => {
+    console.log(startDate);
+    const _date = new Date(startDate * 1000);
+    setDate(
+      `${_date.getFullYear()}-${_date.getMonth() + 1}-${_date.getDate()}`
+    );
+  }, []);
   return (
-    <div className="flex justify-around items-center h-[70px] w-[100%]">
-      <div>BET: 1000$</div>
-      <div>FROM: 26-08-23</div>
-      <div>TO: 26-10-23</div>
-      <div className="text-[#59de00]">PROFIT: ^1.6%</div>
+    <div className="flex justify-around items-center h-[70px] w-[100%] ">
+      <div>BET: {amount}$</div>
+      <div>DATE: {date}</div>
+      <div>DURATION: {duration}min</div>
+      <div className="text-[#59de00]">PROFIT: [PENDING]</div>
     </div>
   );
 }
