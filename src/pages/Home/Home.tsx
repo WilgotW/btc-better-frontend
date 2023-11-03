@@ -33,51 +33,10 @@ export default function Home() {
       finnhubApi(setTradeData, tradeData);
     }
     socket();
-
-    // localStorage.removeItem("authorization");
-
-    async function userData() {
-      if (hasToken()) {
-        try {
-          const userData = await getUserData();
-
-          if (userData === undefined) {
-            setNoFetch(true);
-          }
-          if (userData) {
-            setUserData({
-              userId: userData.id,
-              balance: userData.balance,
-            });
-            console.log(userData);
-          }
-        } catch (err) {
-          setNoFetch(true);
-          console.error(err);
-        }
-
-        // const userBets = await getUserBets();
-        // if (!userBets) {
-        //   console.log("no bets");
-        // } else {
-        //   console.log(userBets);
-        // }
-
-        // const data: User = getUserData();
-        // setUserData(data);
-      } else {
-        setNoFetch(true);
-      }
-    }
-    // function onComplete(userData) {
-    //   if (userData === undefined) {
-    //     navigate("/login");
-    //   }
-    // }
-    userData();
-
-    // fetchEndPrice(1697346450, 1697346510);
     fetchEndValue();
+    if (!userData) {
+      fetchUserData();
+    }
   }, []);
 
   useEffect(() => {
@@ -85,6 +44,43 @@ export default function Home() {
       navigate("/login");
     }
   }, [noFetch]);
+
+  async function fetchUserData() {
+    console.log("called");
+    if (hasToken()) {
+      try {
+        const fetchedData = await getUserData();
+
+        if (fetchedData === undefined) {
+          setNoFetch(true);
+          return;
+        }
+
+        if (fetchedData.id !== undefined && fetchedData.balance !== undefined) {
+          setUserData({
+            userId: fetchedData.id,
+            balance: fetchedData.balance,
+          });
+          console.log(fetchedData);
+        }
+      } catch (err) {
+        setNoFetch(true);
+        console.error(err);
+      }
+
+      // const userBets = await getUserBets();
+      // if (!userBets) {
+      //   console.log("no bets");
+      // } else {
+      //   console.log(userBets);
+      // }
+
+      // const data: User = getUserData();
+      // setUserData(data);
+    } else {
+      setNoFetch(true);
+    }
+  }
 
   async function bet(ev: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     ev.preventDefault();
@@ -100,6 +96,7 @@ export default function Home() {
         tradeData[tradeData.length - 1].price
       );
       console.log(bet);
+      fetchUserData();
     }
   }
 
@@ -108,6 +105,7 @@ export default function Home() {
   ) {
     ev.preventDefault();
     await checkBets();
+    fetchUserData();
   }
   return (
     <div className="w-[100%] h-[100%] flex justify-center">
@@ -141,13 +139,13 @@ export default function Home() {
               </div>
               <div className="w-[300px] h-[70px] p-4 rounded-[10px] bg-g1 flex items-center">
                 {userData?.balance ? (
-                  <h1 className="text-[30px] text-g3">
+                  <h1 className="text-[25px] text-g3">
                     BALANCE: ${userData.balance}
                   </h1>
                 ) : (
                   <div className="flex w-[100%] items-center justify-left">
                     {" "}
-                    <h1 className="text-[30px] text-g3">
+                    <h1 className="text-[25px] text-g3">
                       <div>BALANCE:</div>
                     </h1>
                     <div className="w-[40%] flex justify-center items-center">

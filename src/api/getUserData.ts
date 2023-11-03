@@ -21,7 +21,6 @@ export default async function getUserData() {
 
     return undefined;
   } catch (err) {
-    console.log("iww");
     return undefined;
   }
 }

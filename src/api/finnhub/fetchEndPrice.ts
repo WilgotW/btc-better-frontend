@@ -12,4 +12,5 @@ export default async function fetchEndPrice(from: number, to: number) {
   );
   const data = await response.json();
   console.log(await data);
+  return await data;
 }
