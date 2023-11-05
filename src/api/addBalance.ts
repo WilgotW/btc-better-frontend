@@ -16,6 +16,7 @@ export default async function addBalance(betData: any) {
     console.log("the new value: " + newValue.c[0]);
     console.log(betData.startdate, betData.enddate);
     const requestBody = {
+      betId: betData.id,
       newValue: newValue.c[0],
       startValue: betData.startvalue,
       amount: betData.amount,

@@ -10,7 +10,7 @@ interface IProps {
 
 export default function GraphComponent({ tradeData }: IProps) {
   const [points, setPoints] = useState<GraphPoint[]>([]);
-  const [increased, setIncreased] = useState<boolean>(false);
+  const [valueColor, setValueColor] = useState<string>("#6cc54c");
 
   const [prevPointsAmount, setPrevPointsAmount] = useState<number>(0);
 
@@ -55,12 +55,18 @@ export default function GraphComponent({ tradeData }: IProps) {
   useEffect(() => {
     if (!points || points.length <= 2) return;
     if (
+      points[points.length - 1].pointValue ===
+      points[points.length - 2].pointValue
+    ) {
+      return;
+    }
+    if (
       points[points.length - 1].pointValue <=
       points[points.length - 2].pointValue
     ) {
-      setIncreased(true);
+      setValueColor("#c54c4c");
     } else {
-      setIncreased(false);
+      setValueColor("#6cc54c");
     }
   }, [points]);
 
@@ -70,7 +76,7 @@ export default function GraphComponent({ tradeData }: IProps) {
         <div className="flex items-center h-[200px]">
           <h1
             style={{
-              color: increased ? "#c54c4c" : "#6cc54c",
+              color: valueColor,
             }}
             className="text-[4rem] tracking-wider text-outlined-decoration"
           >

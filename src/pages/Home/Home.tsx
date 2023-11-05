@@ -180,7 +180,7 @@ export default function Home() {
                 <BiRefresh
                   className="w-[100%] h-[100%] "
                   style={{ fill: "white" }}
-                  onClick={(ev) => getBetsDone(ev)}
+                  onClick={(ev: any) => getBetsDone(ev)}
                 />
               </div>
             </div>

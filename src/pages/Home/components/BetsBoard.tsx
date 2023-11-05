@@ -17,6 +17,7 @@ export default function BetsBoard({ betData }: IProps) {
               amount={bet.amount}
               startDate={bet.startdate}
               duration={bet.duration}
+              profit={bet.profit}
             />
           ))}
         </div>

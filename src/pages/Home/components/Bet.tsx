@@ -4,9 +4,10 @@ interface IProps {
   amount: number;
   startDate: number;
   duration: number;
+  profit: number;
 }
 
-export default function Bet({ amount, startDate, duration }: IProps) {
+export default function Bet({ amount, startDate, duration, profit }: IProps) {
   const [date, setDate] = useState<string>("");
   useEffect(() => {
     console.log(startDate);
@@ -20,7 +21,15 @@ export default function Bet({ amount, startDate, duration }: IProps) {
       <div>BET: {amount}$</div>
       <div>DATE: {date}</div>
       <div>DURATION: {duration}min</div>
-      <div className="text-[#59de00]">PROFIT: [PENDING]</div>
+
+      <div
+        style={{
+          color: profit ? (profit > 0 ? "#6CC54C" : "#C54C4C") : "black",
+        }}
+      >
+        PROFIT:
+        {profit ? <>{profit}</> : <>[PENDING]</>}
+      </div>
     </div>
   );
 }
