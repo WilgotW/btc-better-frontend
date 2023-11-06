@@ -10,21 +10,21 @@ export default function About() {
         <div className="flex justify-center mb-[80px]">
           <div className="w-[50%]">
             <p className="text-center">
-              Welcome to BTC Better, your ultimate destination for an
-              exhilarating and risk-free experience in the world of Bitcoin
-              betting. We've created this app with the vision of making Bitcoin
-              more accessible, engaging, and enjoyable for users of all
-              backgrounds. Whether you're a seasoned cryptocurrency enthusiast
-              or just getting started in the world of digital assets, BTC Better
-              offers an exciting platform for you to explore, learn, and profit
-              from Bitcoin betting.
+              Welcome to BTC Bet, your ultimate destination for an exhilarating
+              and risk-free experience in the world of Bitcoin betting. We've
+              created this app with the vision of making Bitcoin more
+              accessible, engaging, and enjoyable for users of all backgrounds.
+              Whether you're a seasoned cryptocurrency enthusiast or just
+              getting started in the world of digital assets, BTC Bet offers an
+              exciting platform for you to explore, learn, and profit from
+              Bitcoin betting.
             </p>
           </div>
         </div>
         <div className="flex justify-center mb-[80px]">
           <div className="w-[50%]">
             <p className="text-center">
-              With BTC Better, you can place bets and experience the thrill of
+              With BTC Bet, you can place bets and experience the thrill of
               Bitcoin trading without risking your own capital. We offer a
               virtual currency that you can use to make bets, experiment with
               trading strategies, and get a sense of how cryptocurrency markets
