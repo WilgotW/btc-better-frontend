@@ -92,7 +92,7 @@ export default function Login() {
           </div>
           <div className="h-8 flex pl-6 pt-4">
             {missingInputs && (
-              <span className="text-[red]">Please fill out all inputs</span>
+              <span className="text-[red]">Please fill in all inputs</span>
             )}
           </div>
           <div className="w-[100%] h-[100px] items-center flex pl-7">
