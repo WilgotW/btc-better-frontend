@@ -112,7 +112,10 @@ export default function Home() {
   return (
     <div className="w-[100%] h-[100%] flex justify-center">
       <div className="w-[1500px] h-[100%] bg-main flex-col relative mt-5">
-        <GraphComponent tradeData={tradeData} />
+        <div className="border-b">
+          <GraphComponent tradeData={tradeData} />
+          <div className="flex justify-center">test</div>
+        </div>
         <div className="flex w-[100%]">
           <div className="h-[fit-content] flex flex-col gap-5 p-[50px]">
             <BetButton

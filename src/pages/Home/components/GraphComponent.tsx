@@ -84,7 +84,7 @@ export default function GraphComponent({ tradeData }: IProps) {
           </h1>
         </div>
       </div>
-      <div className="border-b border-text pb-[100px] flex justify-center underline">
+      <div className="border-text pb-[100px] flex justify-center underline">
         <LiveGraph
           canvasWidth={canvasWidth}
           canvasHeight={canvasHeight}
