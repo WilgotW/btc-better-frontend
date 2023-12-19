@@ -101,14 +101,29 @@ export default function Home() {
       fetchUserData();
     }
   }
+  async function sell(ev: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    ev.preventDefault();
+
+    if (tradeData && userData) {
+    }
+  }
 
   async function getBetsDone(
     ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
     ev.preventDefault();
-    await checkBets();
+    if (tradeData) {
+      const currentValue: number = tradeData[tradeData.length - 1].price;
+      if (currentValue) {
+        console.log(currentValue);
+        await checkBets(currentValue);
+      } else {
+        console.log("current value error");
+      }
+    }
     fetchUserData();
   }
+
   return (
     <div className="w-[100%] h-[100%] flex justify-center">
       <div className="w-[1500px] h-[100%] bg-main flex-col relative mt-5">
@@ -149,7 +164,6 @@ export default function Home() {
                   </h1>
                 ) : (
                   <div className="flex w-[100%] items-center justify-left">
-                    {" "}
                     <h1 className="text-[25px] text-g3">
                       <div>BALANCE:</div>
                     </h1>
@@ -160,19 +174,28 @@ export default function Home() {
                 )}
               </div>
             </div>
-            <div className="flex w-[100%] h-[70px] gap-[30px]">
+
+            {/* <div className="flex w-[100%] h-[70px] gap-[30px]">
               <BetDurationButton time={parseInt(duration)} />
               <DurationInput
                 inputValue={duration}
                 setInputValue={setDuration}
               />
-            </div>
+            </div> */}
             <div
               onClick={(ev) => bet(ev)}
               className="select-none w-[100%] border rounded-[10px] bg-[#001F3F] h-[70px] flex justify-center items-center cursor-pointer"
             >
               <h1 className="text-white text-[20px] tracking-widest ">
                 PLACE BET
+              </h1>
+            </div>
+            <div
+              onClick={(ev) => sell(ev)}
+              className="select-none w-[100%] border rounded-[10px] bg-[#001F3F] h-[70px] flex justify-center items-center cursor-pointer"
+            >
+              <h1 className="text-white text-[20px] tracking-widest ">
+                SELL ALL
               </h1>
             </div>
           </div>
