@@ -11,7 +11,7 @@ export default function BetsBoard({ betData }: IProps) {
         <div className="flex justify-center p-[10px] bg-nvb rounded">
           <h1 className="text-[20px] text-g1 tracking-wide">BETS</h1>
         </div>
-        <div className="flex flex-col h-[200px] gap-[1px]">
+        <div className="flex flex-col max-h-[200px] gap-[25px] overflow-y-scroll pt-3 pb-3">
           {betData?.map((bet: any) => (
             <Bet
               amount={bet.amount}

@@ -20,7 +20,7 @@ export default function Bet({ amount, startDate, duration, profit }: IProps) {
     <div className="flex justify-around items-center h-[70px] w-[100%] ">
       <div>BET: {amount}$</div>
       <div>DATE: {date}</div>
-      <div>DURATION: {duration}min</div>
+      {/* <div>DURATION: {duration}min</div> */}
 
       <div
         style={{

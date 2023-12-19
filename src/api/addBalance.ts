@@ -33,7 +33,7 @@ export default async function addBalance(betData: any, currentPrice: number) {
     if (response.status === 200) {
       const updatedUser = await response.json();
       console.log(updatedUser);
-      window.location.reload();
+      // window.location.reload();
     }
   } catch (err) {
     console.error(err);
