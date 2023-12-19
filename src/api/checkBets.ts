@@ -1,6 +1,6 @@
 import addBalance from "./addBalance";
 
-export default async function checkBets() {
+export default async function checkBets(currentPrice: number) {
   const authKey = localStorage.getItem("authorization");
   if (!authKey) {
     console.error("no key found");
@@ -19,8 +19,8 @@ export default async function checkBets() {
       const data = await response.json();
 
       //for each bet ended: add balance
-      data.forEach((bet) => {
-        addBalance(bet);
+      data.forEach((bet: any) => {
+        addBalance(bet, currentPrice);
       });
 
       console.log(data);

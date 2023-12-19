@@ -10,7 +10,6 @@ export default async function placeBet(
     console.error("no key found");
     return undefined;
   }
-  //   console.log(amount);
 
   try {
     const requestBody = {

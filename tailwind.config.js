@@ -24,6 +24,13 @@ export default {
       green1: "#c54c4c",
       red1: "#6cc54c",
     },
+    screens: {
+      "super-small": { max: "300px" },
+      mobile: { max: "940px" },
+      normal: { max: "1540px" },
+      large: { max: "2000px" },
+      "super-large": { max: "2800px" },
+    },
   },
   plugins: [],
 };

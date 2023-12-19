@@ -1,6 +1,6 @@
 import fetchEndPrice from "./finnhub/fetchEndPrice";
 
-export default async function addBalance(betData: any) {
+export default async function addBalance(betData: any, currentPrice: number) {
   const authKey = localStorage.getItem("authorization");
   if (!authKey) {
     console.error("no key found");
@@ -8,16 +8,16 @@ export default async function addBalance(betData: any) {
   }
 
   try {
-    const newValue = await fetchEndPrice(
-      betData.startdate - 20000,
-      betData.enddate - 10
-    );
-    if (!newValue) return;
-    console.log("the new value: " + newValue.c[0]);
-    console.log(betData.startdate, betData.enddate);
+    // const newValue = await fetchEndPrice(
+    //   betData.startdate - 20000,
+    //   betData.enddate - 10
+    // );
+    // if (!newValue) return;
+    // console.log("the new value: " + newValue.c[0]);
+    // console.log(betData.startdate, betData.enddate);
     const requestBody = {
       betId: betData.id,
-      newValue: newValue.c[0],
+      newValue: currentPrice,
       startValue: betData.startvalue,
       amount: betData.amount,
     };
@@ -33,7 +33,7 @@ export default async function addBalance(betData: any) {
     if (response.status === 200) {
       const updatedUser = await response.json();
       console.log(updatedUser);
-      window.location.reload();
+      // window.location.reload();
     }
   } catch (err) {
     console.error(err);
