@@ -14,8 +14,9 @@ export default function BetsBoard({ betData }: IProps) {
           </h1>
         </div>
         <div className="flex flex-col max-h-[200px] mobile:max-h-[100%] gap-[25px] mobile:gap-[12px] overflow-y-scroll pt-3 mobile:pt-2 pb-3 mobile:pb-2">
-          {betData?.map((bet: any) => (
+          {betData?.map((bet: any, i) => (
             <Bet
+              key={i}
               amount={bet.amount}
               startDate={bet.startdate}
               duration={bet.duration}
