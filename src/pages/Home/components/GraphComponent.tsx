@@ -14,11 +14,29 @@ export default function GraphComponent({ tradeData }: IProps) {
 
   const [prevPointsAmount, setPrevPointsAmount] = useState<number>(0);
 
-  // const currentPrice: number;
-
   const spacing = 3;
-  const canvasWidth = 1400;
   const canvasHeight = 500;
+  const [canvasWidth, setCanvasWidth] = useState<number>(500);
+
+  useEffect(() => {
+    const updateCanvasWidth = () => {
+      const screenWidth =
+        window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth;
+
+      if (screenWidth <= 600) {
+        setCanvasWidth(500);
+      } else {
+        setCanvasWidth(1400);
+      }
+    };
+    updateCanvasWidth();
+    window.addEventListener("resize", updateCanvasWidth);
+    return () => {
+      window.removeEventListener("resize", updateCanvasWidth);
+    };
+  }, []);
 
   const maxPoints = 75;
 
@@ -72,29 +90,31 @@ export default function GraphComponent({ tradeData }: IProps) {
 
   return (
     <>
-      <div className="w-[100%] flex justify-center absolute">
+      <div className="w-[100%] flex justify-center absolute mobile:relative">
         <div className="flex items-center h-[200px]">
           <h1
             style={{
               color: valueColor,
             }}
-            className="text-[4rem] tracking-wider text-outlined-decoration"
+            className="text-[70px] mobile:text-[40px]  tracking-wider text-outlined-decoration"
           >
             {tradeData && <>${tradeData[tradeData.length - 1].price}</>}
           </h1>
         </div>
       </div>
-      <div className="border-text pb-[100px] flex justify-center underline">
-        <LiveGraph
-          canvasWidth={canvasWidth}
-          canvasHeight={canvasHeight}
-          points={points}
-          setPoints={setPoints}
-          spacing={spacing}
-          prevPointsAmount={prevPointsAmount}
-          setPrevPointsAmount={setPrevPointsAmount}
-        />
-      </div>
+      {canvasWidth >= 900 && (
+        <div className="border-text pb-[100px] flex justify-center underline">
+          <LiveGraph
+            canvasWidth={1400}
+            canvasHeight={canvasHeight}
+            points={points}
+            setPoints={setPoints}
+            spacing={spacing}
+            prevPointsAmount={prevPointsAmount}
+            setPrevPointsAmount={setPrevPointsAmount}
+          />
+        </div>
+      )}
     </>
   );
 }

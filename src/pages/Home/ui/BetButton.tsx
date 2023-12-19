@@ -24,22 +24,32 @@ export default function BetButton({
       onClick={(ev) => handleButton(ev)}
       className={`flex bg-[${
         selectedAmount === amount ? "#F5F5F5" : "#001F3F"
-      }] w-[200px] h-[100%] border rounded-[10px] justify-around cursor-pointer select-none`}
+      }] w-[200px] mobile:w-[100px] h-[100%] border rounded-[10px] mobile:rounded-[5px] justify-around cursor-pointer select-none`}
     >
-      <div className="w-[70px] h-[70px]">
+      <div className="w-[70px] mobile:w-[30px] h-[70px] mobile:h-[30px]">
         <img
           className={`${selectedAmount === amount ? "black" : "white-image"}`}
           src={goldStack}
           alt=""
         />
       </div>
-      <div className={`h-[100] flex items-center w-[100px]`}>
+      <div
+        className={`flex items-center w-[100px] mobile:w-[50px] text-[17px] mobile:text-[11px] gap-1`}
+      >
+        <span
+          style={{
+            color: selectedAmount === amount ? "gray" : "white",
+          }}
+          className="mobile:text-[0px]"
+        >
+          BET
+        </span>
         <span
           style={{
             color: selectedAmount === amount ? "gray" : "white",
           }}
         >
-          BET {amount}$
+          {amount}$
         </span>
       </div>
     </div>
